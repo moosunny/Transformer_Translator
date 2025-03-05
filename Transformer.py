@@ -4,12 +4,13 @@ from Encoder import Encoder
 from Decoder import Decoder
 
 class Transformer(nn.Module):
-    def __init__(self, vocab_size, max_len, n_layers, d_model, d_ff, n_heads, drop_p, pad_idx):
+    def __init__(self, vocab_size, max_len, n_layers, d_model, d_ff, n_heads, drop_p, pad_idx, DEVICE):
         super().__init__()
         self.pad_idx = pad_idx
+        
         self.input_embedding = nn.Embedding(vocab_size, d_model)
-        self.encoder = Encoder(self.input_embedding, max_len, n_layers, d_model, d_ff, n_heads, drop_p)
-        self.decoder = Decoder(self.input_embedding, max_len, n_layers, d_model, d_ff, n_heads, drop_p)
+        self.encoder = Encoder(self.input_embedding, max_len, n_layers, d_model, d_ff, n_heads, drop_p, DEVICE)
+        self.decoder = Decoder(self.input_embedding, max_len, n_layers, d_model, d_ff, n_heads, drop_p, DEVICE, vocab_size)
 
         self.n_heads = n_heads
 
